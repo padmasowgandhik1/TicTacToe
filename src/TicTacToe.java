@@ -9,28 +9,27 @@ public class TicTacToe {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter player1 name: ");
         String player1 = scanner.nextLine();
-        System.out.println(player1);
         System.out.println("Enter player2 name: ");
         String player2 = scanner.nextLine();
-        System.out.println(player2);
 
         //Initiate Game board
-        Board board = new Board();
-        board.addPlayer(player1, player2);
+        Board board = new Board(player1, player2);
+        boolean validMove = false;
 
         //Play Game
-        Player currentPlayer = board.player2;
-        System.out.println(currentPlayer);
         while(!board.isGameOver()){
-            currentPlayer = board.nextPlayer(currentPlayer);
-            System.out.println(currentPlayer);
+            if(validMove){
+                board.nextPlayer();
+            }
             board.viewBoard();
-            System.out.println(currentPlayer.getName() + ", Enter the x & y coordinates of your next move: ");
-            board.updateBoard(currentPlayer, scanner.nextInt(), scanner.nextInt());
+            System.out.println(board.getCurrentPLayer().getName() + ", Enter the x & y coordinates of your next move: ");
+            validMove = board.updateBoard(board.getCurrentPLayer(), scanner.nextInt(), scanner.nextInt());
         }
 
-        //Decalare winner
-        System.out.println("Game Over!!  Congratulations " + currentPlayer.getName() );
+        //Declare winner
+        board.viewBoard();
+        System.out.println("Game Over!!  Congratulations " + board.getCurrentPLayer().getName()
+                + " (" + board.getCurrentPLayer().getSymbol() + ")" );
 
     }
 }
